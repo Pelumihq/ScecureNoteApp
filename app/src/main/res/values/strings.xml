@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Scecure Note App</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
 </resources>
