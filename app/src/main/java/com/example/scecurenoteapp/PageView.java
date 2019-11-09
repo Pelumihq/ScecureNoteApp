@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,9 +56,12 @@ public class PageView extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id=item.getItemId();
-                if(id==R.id.menu_save);
+                if(id==R.id.menu_save){
                 saveNote();
-                finish();
+                finish();}else if(id==R.id.menu_delete){
+                    deleteNote();}else if(id==R.id.share_menu){
+                    shareNote(enterTitle,enterText);
+                }
         return super.onOptionsItemSelected(item);
     }
     public void saveNote(){
@@ -104,7 +108,24 @@ public class PageView extends AppCompatActivity {
         Log.d("pelumDebugg",val+" boov");
 
 
+    }
+    public void deleteNote(){
+        NoteOpenHandler noteOpenHandler= new NoteOpenHandler(this);
+        SQLiteDatabase db= noteOpenHandler.getWritableDatabase();
+        int id=noteList.get(position).getId();
+        String where =_ID +" =?" ;
+        String[] whereArgs={String.valueOf(id)};
+        db.delete(NOTETABLE,where,whereArgs);
+        finish();
+    }
 
-
+    private void shareNote(EditText title, EditText description ) {
+        Intent intent=new Intent(Intent.ACTION_SEND);
+        intent.setType("message/rfc822");
+        intent.putExtra(Intent.EXTRA_SUBJECT,title.getText().toString());
+        intent.putExtra(Intent.EXTRA_TEXT,description.getText().toString());
+        if(intent.resolveActivity(getPackageManager())!=null) {
+            startActivity(intent);
+        }
     }
 }

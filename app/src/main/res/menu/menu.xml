@@ -12,4 +12,8 @@
         android:icon="@drawable/ic_delete_black_24dp"
         android:id="@+id/menu_delete"
         app:showAsAction="collapseActionView"/>
+    <item app:showAsAction="collapseActionView"
+        android:title="Share"
+        android:icon="@drawable/ic_share_black_24dp"
+        android:id="@+id/share_menu"/>
 </menu>
